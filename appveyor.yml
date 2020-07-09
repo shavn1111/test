@@ -21,6 +21,8 @@ install:
   - SET GYP_MSVS_VERSION=2013
   - if "%PLATFORM%" == "x64" set PATH=C:\Python27-x64;%PATH%
   - if "%PLATFORM%" == "x86" SET PATH=C:\python27;%PATH%
+  - npm install node-gyp@5.1.0 -g
+  - npm config set node_gyp "C:\Users\appveyor\AppData\Roaming\npm\node_modules\node-gyp\bin\node-gyp.js"
   - npm install --build-from-source
   - SET SKIP_REQUIRE_NOBLE=true
 
