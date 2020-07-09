@@ -1,0 +1,46 @@
+environment:
+  nodejs_version: 8
+platform:
+  - x64
+  - x86
+
+build: off
+
+version: '{build}'
+
+shallow_clone: true
+
+# copied from https://github.com/octoblu/meshblu-connector-ble-heartrate/blob/master/appveyor.yml
+install:
+  - ps: Install-Product node $env:nodejs_version $env:Platform
+  - node --version
+  - npm --version
+  - node -e "console.log(process.arch);"
+  - FOR /F "delims=" %%a IN ('node -e "console.log(require('./package.json').version)"') DO SET PACKAGE_VERSION=%%~a
+  - SET PATH=C:\Program Files (x86)\MSBuild\12.0\bin\;%PATH%
+  - SET GYP_MSVS_VERSION=2013
+  - if "%PLATFORM%" == "x64" set PATH=C:\Python27-x64;%PATH%
+  - if "%PLATFORM%" == "x86" SET PATH=C:\python27;%PATH%
+  - npm install --build-from-source
+  - SET SKIP_REQUIRE_NOBLE=true
+
+test_script:
+  - node --version
+  - npm run release
+
+artifacts:
+  - path: dist
+    name: OpenBCIHub
+
+#deploy:
+#  release: OpenBCIHub-win${platform}-v$(appveyor_build_version)
+#  description: 'The OpenBCI Electron Hub'
+#  provider: GitHub
+#  auth_token:
+#    secure: ent1No7//XcesOZ99kbi76tUtsoYoVzGCc6szPKbiMKRmtI9PxDWl+UVY9ADVo1N
+#  artifact: /OpenBCIHub.zip/            # upload all NuGet packages to release assets
+#  draft: false
+#  prerelease: false
+#  on:
+#    branch: master                 # release from master branch only
+#    appveyor_repo_tag: true        # deploy on tag push only

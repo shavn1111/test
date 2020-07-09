@@ -1,0 +1,25 @@
+os:
+- linux
+- osx
+branches:
+  only:
+  - master
+env:
+- NODE_VERSION="6.9.2"
+before_script:
+- chmod +x ./scripts/travis-build.sh
+script: ./scripts/travis-build.sh
+cache:
+  directories:
+  - node_modules
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+deploy:
+  provider: releases
+  api_key:
+    secure: F73BIw7HI3Ko5t8/bu1ai7vuwd0elZbX6Q6pVBvzaXJOd8opWk2pcYkFBEQMYkH6xVNV2GBwRzbWBR6bjR2BQwqNKb7/nePU8EA7QjaepaFLYaIClHsBtNlsLrkrxbJBwlWAfNswSwDoO4yKyadvUzBesYVNTfo4wBvcQM1FKTOXrQxBJqRM/I1csgM49gxLWqDbU9jPu/O7bQpVzoOmDAt2NrmvGyM67SBMynfbLSWyu+R9XPLjYHoqoM9/jeHiH6JUlmRNqLEN0u6V8PF/QNoqLkVeRKYVkoocieIKxFrdwQOY5bxS8BCDm2Gtd8xQn5iLOo04dQURU5a6dRFaPPKDMaCKeyY6TBXK4oNM4RSONC1N0m7pQx0VHy+lQBoOCA0/tLmDhiei38goBeg+DHVqFMrVTI29YBZq59dn4cbO/Xowz+3VtdJ9HqofjirTSdUMevE6/LYDTYqtZcA3cDAUIIyIb6twZSvYU16sTyAcdrd7ZkQT9fR1J+kkg6RSwIi//5qndfnBj3gz0PQpPiGpo6T4yldIKFd+YnEc3iSEUi/FfEPot0jAa+kLIGMDok3ZSnv5KaDyZJjnsf1lqm3MWbB+ncZBiqEtAwTKIXYpaJDTLalVNhHREH/A86i0wQhgWaK8sO7hnvSuic5NCSaB5a3T2lWJ5QlGqtcnDaw=
+  file: dist/*
+  on:
+    repo: OpenBCI/OpenBCI_Ganglion_Electron
